@@ -1,0 +1,8 @@
+streamlit==1.45.1 
+torch==2.2.0 
+torchtext==0.17.0 
+pandas==2.2.2
+numpy==2.0.2
+transformers==4.32.1 
+underthesea==1.4.1  
+re==2.2.1 
