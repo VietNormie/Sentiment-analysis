@@ -113,7 +113,7 @@ class RNN(nn.Module):
 
 # Load pretrained embeddings and build vocab
 word_embedding = vocab.Vectors(
-    name='/content/drive/MyDrive/Colab Notebooks/Data/Sentiment Analysis/vi_word2vec.txt',
+    name='vi_word2vec.txt',
     unk_init=torch.Tensor.normal_
 )
 vocab = Vocabulary()
@@ -139,7 +139,7 @@ def load_model(path: str):
     model.eval()
     return model
 
-model = load_model('/content/drive/MyDrive/Colab Notebooks/Data/Sentiment Analysis/model.pt')
+model = load_model('model.pt')
 
 # Prediction helper
 def predict_sentiment(model, sentence, vocab, label_mapping=None):
