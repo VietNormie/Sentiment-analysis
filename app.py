@@ -9,6 +9,9 @@ from underthesea import word_tokenize
 import unicodedata
 import re
 from tqdm import tqdm
+import gensim
+from gensim.models import KeyedVectors
+import os
 
 # Dictionary for common Vietnamese slang/abbreviations
 abbreviations = {
@@ -112,12 +115,14 @@ class RNN(nn.Module):
         return self.fc(self.dropout(h))
 
 # Load pretrained embeddings and build vocab
-word_embedding = vocab.Vectors(
-    name='vi_word2vec.txt',
-    unk_init=torch.Tensor.normal_
-)
+embeddings_path = os.path.join('model', 'vi_word2vec.txt')
+
+# Load the embeddings
+word_embedding = KeyedVectors.load_word2vec_format(embeddings_path, binary=False, no_header=True) 
+
 vocab = Vocabulary()
-for w in word_embedding.stoi.keys(): vocab.add(w)
+for w in word_embedding.stoi.keys(): 
+    vocab.add(w)
 
 # Model hyperparams
 input_dim = word_embedding.vectors.shape[0]
@@ -138,8 +143,9 @@ def load_model(path: str):
     model.to(device)
     model.eval()
     return model
-
-model = load_model('model.pt')
+    
+model_path = os.path.join('model', 'model.pt')
+model = load_model(model_path) 
 
 # Prediction helper
 def predict_sentiment(model, sentence, vocab, label_mapping=None):
